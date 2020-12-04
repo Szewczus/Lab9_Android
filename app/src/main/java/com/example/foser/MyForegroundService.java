@@ -30,12 +30,15 @@ public class MyForegroundService  extends Service {
     public static final String TIME = "time";
     public static final String WORK = "work";
     public static final String WORK_DOUBLE = "work_double";
-
+    public static final String OPCJA2="2s";
+    public static final String OPCJA5="5s";
+    public static final String OPCJA10="10s";
     //3
     private String message = "Nasz licznik";
-    private Boolean show_time, do_work, double_speed;
-    private final long period = 2000; //2s
-
+    private Boolean show_time, do_work, double_speed, opcja2s, opcja5s, opcja10s;
+    private final long period2s = 2000; //2s
+    private final long period5s = 5000; //5s
+    private final long period10s = 10000; //10s
     //4
     private Context ctx;
     private Intent notificationIntent;
@@ -89,6 +92,9 @@ public class MyForegroundService  extends Service {
         show_time = intent.getBooleanExtra(TIME,false);
         do_work = intent.getBooleanExtra(WORK,false);
         double_speed = intent.getBooleanExtra(WORK_DOUBLE,false);
+        opcja2s=intent.getBooleanExtra(OPCJA2, true);
+        opcja5s=intent.getBooleanExtra(OPCJA5, false);
+        opcja10s=intent.getBooleanExtra(OPCJA10, false);
 
         createNotificationChannel();
 
@@ -127,7 +133,37 @@ public class MyForegroundService  extends Service {
 
         Toast.makeText(this, info ,Toast.LENGTH_LONG).show();*/
         if(do_work) {
-            timer.schedule(timerTask, 0L, double_speed ? period / 2L : period);
+            if(double_speed==true)
+            {
+                if(opcja2s==true)
+                {
+                    timer.schedule(timerTask, 0L, period2s / 2L);
+                }
+                if(opcja5s==true)
+                {
+                    timer.schedule(timerTask, 0L, period5s / 2L);
+                }
+                if(opcja10s==true)
+                {
+                    timer.schedule(timerTask, 0L, period10s / 2L);
+                }
+            }
+            else
+            {
+                if(opcja2s==true)
+                {
+                    timer.schedule(timerTask, 0L, period2s );
+                }
+                if(opcja5s==true)
+                {
+                    timer.schedule(timerTask, 0L, period5s );
+                }
+                if(opcja10s==true)
+                {
+                    timer.schedule(timerTask, 0L, period10s);
+                }
+            }
+            /*timer.schedule(timerTask, 0L, double_speed ? period2s / 2L : period2s);*/
         }
 
     }
