@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FoSer</string>
+    <string name="app_name">ForSer</string>
     <!-- Settings Activity Title -->
     <string name="title_activity_settings">Settings</string>
 
@@ -37,4 +37,5 @@
     <string name="titleSettings">Settings</string>
     <string name="titleExit">Exit</string>
     <string name="service_settings">Service settings</string>
+    <string name="licznik">Nasz licznik: </string>
     </resources>
