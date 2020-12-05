@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
@@ -33,9 +34,11 @@ public class MyForegroundService  extends Service {
     public static final String OPCJA2="2s";
     public static final String OPCJA5="5s";
     public static final String OPCJA10="10s";
+    public  static  final String RESET_COUNTER="reset_counter"; //tu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     //3
     private String message = "Nasz licznik";
-    private Boolean show_time, do_work, double_speed, opcja2s, opcja5s, opcja10s;
+    private Boolean show_time, do_work, double_speed, opcja2s, opcja5s, opcja10s, reset_counter=false;
     private final long period2s = 2000; //2s
     private final long period5s = 5000; //5s
     private final long period10s = 10000; //10s
@@ -56,21 +59,35 @@ public class MyForegroundService  extends Service {
         ctx = this;
         notificationIntent = new Intent(ctx, MainActivity.class);
         pendingIntent = PendingIntent.getActivity(this,0,notificationIntent,0);
-        /*super.onCreate();*/
-        counter = 0;
+        final SharedPreferences preferences=androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        reset_counter=preferences.getBoolean("reset_counter", false);
+
+        if(reset_counter)
+        {
+            counter=preferences.getInt("counter", 0);
+
+        }
+        else
+        {
+            counter=0;
+        }
         timer = new Timer();
+
         timerTask = new TimerTask() {
             @Override
-            public void run() {
-                counter++;
-                handler.post(runnable);
-            }
+                public void run() {
+                    counter++;
+                    handler.post(runnable);
+                }
         };
 
     }
 
     @Override
     public void onDestroy() {
+
+        final SharedPreferences preferences=androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.edit().putInt("counter", counter).apply();
         handler.removeCallbacks(runnable);
         timer.cancel();
         timer.purge();
@@ -95,6 +112,7 @@ public class MyForegroundService  extends Service {
         opcja2s=intent.getBooleanExtra(OPCJA2, true);
         opcja5s=intent.getBooleanExtra(OPCJA5, false);
         opcja10s=intent.getBooleanExtra(OPCJA10, false);
+        reset_counter=intent.getBooleanExtra(RESET_COUNTER, false);
 
         createNotificationChannel();
 
@@ -182,7 +200,7 @@ public class MyForegroundService  extends Service {
                     .setSmallIcon(R.drawable.ic_my_icon)
                     .setContentTitle(getString(R.string.ser_title))
                     .setShowWhen(show_time)
-                    .setContentText("Nasz licznik:" + " " + String.valueOf(counter))
+                    .setContentText("Nasz licznik:" + " " + String.valueOf(counter) + "\n "+ "Reset counter: " + String.valueOf(reset_counter))
                     .setLargeIcon(BitmapFactory.decodeResource (getResources() , R.drawable.circle ))
                     .setContentIntent(pendingIntent)
                     .build();

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonStart, buttonStop, buttonRestart;
     private TextView textInfoService, textInfoSettings;
     private String message;
-    private Boolean show_time, work, work_double, opcja2s, opcja5s, opcja10s;
+    private Boolean show_time, work, work_double, opcja2s, opcja5s, opcja10s, reset_counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         startIntent.putExtra(MyForegroundService.OPCJA2, opcja2s);
         startIntent.putExtra(MyForegroundService.OPCJA5, opcja5s);
         startIntent.putExtra(MyForegroundService.OPCJA10, opcja10s);
+        startIntent.putExtra(MyForegroundService.RESET_COUNTER, reset_counter);
 
         ContextCompat.startForegroundService(this, startIntent);
         updateUI();
@@ -93,11 +94,13 @@ public class MainActivity extends AppCompatActivity {
         opcja2s=sharedPreferences.getBoolean("2s", true);
         opcja5s=sharedPreferences.getBoolean("5s", false);
         opcja10s=sharedPreferences.getBoolean("10s", false);
+        reset_counter=sharedPreferences.getBoolean("reset_counter", false); //tu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         return "Message: " + message + "\n"
                 +"show_time: " + show_time.toString() +"\n"
                 +"work: " + work.toString() + "\n"
-                +"double: " + work_double.toString();
+                +"double: " + work_double.toString() + "\n"
+                +"reset counter: " + reset_counter.toString(); //tu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     private void updateUI(){
         if(isMyForegroundServiceRunning()){
