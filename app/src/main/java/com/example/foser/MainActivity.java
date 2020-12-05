@@ -94,13 +94,12 @@ public class MainActivity extends AppCompatActivity {
         opcja2s=sharedPreferences.getBoolean("2s", true);
         opcja5s=sharedPreferences.getBoolean("5s", false);
         opcja10s=sharedPreferences.getBoolean("10s", false);
-        reset_counter=sharedPreferences.getBoolean("reset_counter", false); //tu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        reset_counter=sharedPreferences.getBoolean("reset_counter", false);
 
         return "Message: " + message + "\n"
                 +"show_time: " + show_time.toString() +"\n"
                 +"work: " + work.toString() + "\n"
-                +"double: " + work_double.toString() + "\n"
-                +"reset counter: " + reset_counter.toString(); //tu!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                +"double: " + work_double.toString();
     }
     private void updateUI(){
         if(isMyForegroundServiceRunning()){

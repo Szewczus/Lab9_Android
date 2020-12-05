@@ -200,7 +200,7 @@ public class MyForegroundService  extends Service {
                     .setSmallIcon(R.drawable.ic_my_icon)
                     .setContentTitle(getString(R.string.ser_title))
                     .setShowWhen(show_time)
-                    .setContentText("Nasz licznik:" + " " + String.valueOf(counter) + "\n "+ "Reset counter: " + String.valueOf(reset_counter))
+                    .setContentText("Nasz licznik:" + " " + String.valueOf(counter) + "\n ")
                     .setLargeIcon(BitmapFactory.decodeResource (getResources() , R.drawable.circle ))
                     .setContentIntent(pendingIntent)
                     .build();
