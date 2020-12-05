@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
             buttonRestart.setEnabled(false);
             textInfoService.setText(getString(R.string.info_service_not_running));
         }
-
         textInfoSettings.setText(getPreferences());
     }
 
